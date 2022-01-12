@@ -1,4 +1,5 @@
 const express = require('express')
+const Task = require('./models/task')
 require('./db/mongoose')
 const User = require('./models/user')
 
@@ -17,6 +18,15 @@ app.post('/users', (req, res) => {
     })
 })
 
+app.post('/task', (req, res) => {
+    const task = new Task(req.body)
+
+    task.save().then(() => {
+        res.send(task)
+    }).catch((e) => {
+        res.status(400).send(e)
+    })
+})
 
 
 app.listen(port, () => {

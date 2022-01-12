@@ -24,11 +24,12 @@ const User = mongoose.model(
         password:{
             type:String,
             required:true,
+            minlength:7,
             trim:true,
             lowercase:true,
             validate(value){
-                if(!validator.isEmail((value))){
-                    throw new Error('Email is invalid')
+                if(value.toLowerCase().includes('password')){
+                    throw new Error('password cannot contain "password"')
                 }
             }
         },
