@@ -21,6 +21,10 @@ router.get('/users', async (req, res) => {
     }
 })
 
+router.post('/users/login', async (req, res) => {
+    
+})
+
 
 router.patch('/users/:id', async (req, res) => {
     const updates = Object.keys(req.body)
