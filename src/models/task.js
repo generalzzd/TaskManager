@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 
-const Task = mongoose.model('Task', {
+const taskScheme = mongoose.Schema({
     description: {
         type: String,
         required:true,
@@ -14,15 +14,13 @@ const Task = mongoose.model('Task', {
     }
 })
 
-// const task = new Task({
-//     description: 'this is task desciption',
-//     completed: true
-// })
+taskScheme.pre('save', async function(next){
+    const task = this
 
-// task.save().then((result) => {
-//     console.log(result)
-// }).catch((error) => {
-//     console.log(error)
-// })
+    console.log('task precedure log')
+    next()
+})
+
+const Task = mongoose.model('Task', taskScheme)
 
 module.exports = Task
