@@ -6,7 +6,8 @@ const myFunction = async () => {
     console.log(hashedPassword)
 
 
-    const isMatch = await bcrypt.compare('Red12345!', hashedPassword)
+    const isMatch = await bcrypt.compare('Red12345!', 
+    '$2a$08$M9cgDPQlW6TSdYLlG9rY6O5/orwJ5.PAeyNtczZ4siTqE3eFBaYui')
     console.log(isMatch)
 }
 
