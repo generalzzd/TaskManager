@@ -1,9 +1,13 @@
 const express = require('express')
 const Task = require('../models/task')
+const auth = require('../middleware/auth')
 const router = new express.Router()
 
-router.post('/task', (req, res) => {
-    const task = new Task(req.body)
+router.post('/task', auth, (req, res) => {
+    const task = new Task({
+        ...req.body,
+        creator: req.user._id
+    })
 
     task.save().then(() => {
         res.send(task)
