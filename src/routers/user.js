@@ -14,15 +14,6 @@ router.post('/users', async (req, res) => {
     }
 })
 
-router.get('/users', auth, async (req, res) => {
-    try {
-        const users = await User.find({})
-        res.send(users)
-    } catch (error) {
-        res.status(500).send(error)
-    }
-})
-
 router.post('/users/login', async (req, res) => {
     try{
         const user = await User.findByCredentials(req.body.email, req.body.password)
@@ -33,6 +24,22 @@ router.post('/users/login', async (req, res) => {
     }
 })
 
+router.post('/users/logout', auth, async (req, res) => {
+    try {
+        req.user.tokens = req.user.tokens.filter((token)=>{
+            return token.token !== req.token
+        })
+        await req.user.save()
+
+        res.send()
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
+router.get('/users/me', auth, async (req, res) => {
+    res.send(req.user)
+})
 
 router.patch('/users/:id', async (req, res) => {
     const updates = Object.keys(req.body)
